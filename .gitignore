@@ -1,0 +1,7 @@
+*.class
+*.log
+.idea
+*.ipr
+*.iws
+target
+metastore_db
