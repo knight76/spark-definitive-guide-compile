@@ -4,7 +4,7 @@ import org.apache.spark.{SparkConf, SparkContext}
 import org.apache.spark.sql.SparkSession
 
 trait SparkHelper {
-  lazy val sparkConf: SparkConf         = new SparkConf().setMaster("local[*]")
-  implicit val spark: SparkSession = SparkSession.builder().config(sparkConf).enableHiveSupport().getOrCreate()
-  lazy val sc: SparkContext             = spark.sparkContext
+  lazy val sparkConf: SparkConf  = new SparkConf().setMaster("local[1]")
+  implicit val sparkSession      = SparkSession.builder().config(sparkConf).enableHiveSupport().getOrCreate()
+  lazy val sc: SparkContext      = sparkSession.sparkContext
 }
