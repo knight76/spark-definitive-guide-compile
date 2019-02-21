@@ -7,7 +7,7 @@ object ActionMain extends SparkHelper {
   def main(args: Array[String]): Unit = {
 
     // 2.9
-    val flightData2015: DataFrame = sparkSession.read
+    val flightData2015: DataFrame = spark.read
       .option("inferSchema", "true")
       .option("header", "true")
       .csv("origin-source/data/flight-data/csv/2015-summary.csv")
@@ -16,14 +16,14 @@ object ActionMain extends SparkHelper {
       .sort("count")
       .explain
 
-    sparkSession.conf.set("spark.sql.shuffle.partitions", "5")
+    spark.conf.set("spark.sql.shuffle.partitions", "5")
     flightData2015
       .sort("count")
       .show(2)
 
     // 2.10
     flightData2015.createOrReplaceTempView("flight_data_2015")
-    val sqlWay = sparkSession.sql("""
+    val sqlWay = spark.sql("""
         |SELECT DEST_COUNTRY_NAME, count(1)
         |FROM flight_data_2015
         |GROUP BY DEST_COUNTRY_NAME
@@ -36,12 +36,12 @@ object ActionMain extends SparkHelper {
     sqlWay.explain
     dataFrameWay.explain
 
-    sparkSession.sql("SELECT max(count) FROM flight_data_2015").take(1)
+    spark.sql("SELECT max(count) FROM flight_data_2015").take(1)
 
     import org.apache.spark.sql.functions.max
     flightData2015.select(max("count")).take(1)
 
-    val maxSql = sparkSession.sql(
+    val maxSql = spark.sql(
       """
         |SELECT DEST_COUNTRY_NAME, sum(count) as destination_total
         |FROM flight_data_2015
@@ -60,6 +60,6 @@ object ActionMain extends SparkHelper {
       .limit(5)
       .show()
 
-    sparkSession.stop()
+    spark.stop()
   }
 }
