@@ -13,4 +13,6 @@ object Dependencies {
     "org.apache.spark" %% "spark-avro"      % Versions.spark
   )
 
+  val sqliteJdbc = "org.xerial" % "sqlite-jdbc" % "3.25.2"
+
 }
