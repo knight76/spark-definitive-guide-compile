@@ -1,4 +1,4 @@
-package spark.example.tutorial.chapterr14
+package spark.example.tutorial.chapter14
 
 import org.apache.spark.util.AccumulatorV2
 import spark.example.common.SparkHelper
